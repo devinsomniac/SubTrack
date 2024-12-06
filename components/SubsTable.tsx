@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
+import { SubscriptionWithCustomer } from "@/Database/schema";
 import {
     Table,
     TableBody,
@@ -8,15 +10,34 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { eq } from 'drizzle-orm'
-import { db } from '@/Database'
-import { customer, subscription } from '@/Database/schema'
 
-const SubsTable = async () => {
-    const subs = await db.select().from(subscription).innerJoin(customer, eq(subscription.customerId, customer.customerId));
-    console.log(subs)
+const SubsTable = ({search} : {search : string}) => {
+    const [subs,setSubs] =  useState<SubscriptionWithCustomer[]>([]);
+    const [loading,setLoading] = useState(true)
+    useEffect(() => {
+
+        const fetchData = async() => {
+            try{
+                const response = await fetch(`/api/fetchData?search=${search || ""}`);
+                if(response.ok){
+                    const data = await response.json()
+                    console.log(data)
+                    setSubs(data)
+                }
+                else{
+                    console.error("Failed to fetch data");
+                }
+            }catch(err){
+                console.log("There has been error in SusTable Code",err)
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+        fetchData()
+    },[search])
     return (
-        <div>
+        <div className=' border rounded-md'>
             <Table>
                 <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>

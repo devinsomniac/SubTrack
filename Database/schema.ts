@@ -23,3 +23,16 @@ export const subscription = pgTable("subscription", {
   subscriptionEndDate: date().notNull(), 
   numberOfUsers: integer().notNull(), 
 });
+
+export type SubscriptionWithCustomer = {
+  subscription: {
+      subscriptionId: number;
+      productName: string;
+      subscriptionStartDate: string;
+      subscriptionEndDate: string;
+      numberOfUsers: number;
+  };
+  customer: {
+      name: string;
+  };
+};

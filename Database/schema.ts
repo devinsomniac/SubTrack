@@ -36,3 +36,9 @@ export type SubscriptionWithCustomer = {
       name: string;
   };
 };
+
+export type customerType = {
+    customerId : string,
+    name : string,
+    pan : string | null
+}

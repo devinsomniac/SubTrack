@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useState } from "react"
 import SubsTable from "@/components/SubsTable"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 const Page = () => {
     const [search,setSearch] = useState("")
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

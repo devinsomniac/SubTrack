@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import * as React from "react"
+import { Check, ChevronsUpDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -11,46 +12,33 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/components/ui/popover"
 
-type Customer = {
-  customerId: string;
-  name: string;
-  pan: string | null;
-};
+import { customerType } from "@/Database/schema"
+export default function SelectCustomer() {
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
+  const [customers, setCustomers] = React.useState<customerType[]>([]) 
 
-const SelectCustomer = () => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const [customers, setCustomers] = React.useState<Customer[]>([]);
-  const [search, setSearch] = React.useState("");
-  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    const fetchCustomerFromDb = async () => {
       try {
-        const response = await fetch(`/api/fetchCustomer?search=${search}`);
-        if (response.ok) {
-          const data: Customer[] = await response.json();
-          setCustomers(data);
-        } else {
-          console.error("Failed to fetch data");
-        }
+        const response = await fetch("/api/fetchCustomer")
+        const data = await response.json()
+        setCustomers(data)
+        console.log(data) 
       } catch (err) {
-        console.error("Error fetching data:", err);
-      } finally {
-        setLoading(false);
+        console.error("There has been an error in Select Customer", err)
       }
-    };
-
-    fetchData();
-  }, [search]);
+    }
+    fetchCustomerFromDb()
+  }, [])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -61,32 +49,25 @@ const SelectCustomer = () => {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value || "Select customer..."}
+          {value
+            ? customers.find((customer) => customer.name === value)?.name
+            : "Select customer..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput
-            placeholder="Search customer..."
-            value={search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearch(e.target.value)
-            }
-          />
+          <CommandInput placeholder="Search customer..." />
           <CommandList>
-            {loading && <CommandEmpty>Loading...</CommandEmpty>}
-            {!loading && customers.length === 0 && (
-              <CommandEmpty>No customers found.</CommandEmpty>
-            )}
+            <CommandEmpty>No customer found.</CommandEmpty>
             <CommandGroup>
               {customers.map((customer) => (
                 <CommandItem
-                  key={customer.customerId}
+                  key={customer.customerId} 
                   value={customer.name}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
+                    setValue(currentValue === value ? "" : currentValue)
+                    setOpen(false)
                   }}
                 >
                   <Check
@@ -103,7 +84,5 @@ const SelectCustomer = () => {
         </Command>
       </PopoverContent>
     </Popover>
-  );
-};
-
-export default SelectCustomer;
+  )
+}

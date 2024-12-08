@@ -3,27 +3,33 @@ import SelectProduct from '@/components/SelectProduct'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import React from 'react'
+import { GenerateIds } from '@/lib/GenerateId'
+import React, { ChangeEvent, useState } from 'react'
 
 const page = () => {
+  const [generatedId,setgeneratedId] = useState("")
+  const handleGenerateClick = () => {
+      const newId = GenerateIds()
+      setgeneratedId(newId)
+  }
   return (
     <>
       <section className='p-10'>
         <h2 className='text-2xl font-semibold text-center'>Add New Subscription</h2>
         <form className='flex gap-3 justify-center items-center p-3'>
-          <div>
+          <div className='flex flex-col items-center'>
             <label>Customer</label>
             <SelectCustomer />
           </div>
-          <div>
+          <div className='flex flex-col items-center'>
             <label>Product</label>
             <SelectProduct />
           </div>
-          <div>
+          <div className='flex flex-col items-center'>
             <label>Start Date</label>
             <Input type='date' className='w-[150px]' />
           </div>
-          <div>
+          <div className='flex flex-col items-center' >
             <label>End Date</label>
             <Input type='date' className='w-[150px]' />
           </div>
@@ -40,8 +46,8 @@ const page = () => {
           </div>
           <div>
             <label>Customer Id</label>
-            <Input className='mb-2' />
-            <Button>Generate</Button>
+            <Input className='mb-2' readOnly value={generatedId}/>
+            <Button onClick={handleGenerateClick}>Generate</Button>
           </div>
           <div>
             <label>PAN</label>

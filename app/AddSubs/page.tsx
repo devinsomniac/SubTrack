@@ -4,14 +4,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { GenerateIds } from '@/lib/GenerateId'
-import React, { ChangeEvent, useState } from 'react'
+import React from 'react'
 
 const page = () => {
-  const [generatedId,setgeneratedId] = useState("")
-  const handleGenerateClick = () => {
-      const newId = GenerateIds()
-      setgeneratedId(newId)
-  }
+
   return (
     <>
       <section className='p-10'>
@@ -46,8 +42,8 @@ const page = () => {
           </div>
           <div>
             <label>Customer Id</label>
-            <Input className='mb-2' readOnly value={generatedId}/>
-            <Button onClick={handleGenerateClick}>Generate</Button>
+            <Input className='mb-2' readOnly value={GenerateIds}/>
+            <Button onClick={GenerateIds}>Generate</Button>
           </div>
           <div>
             <label>PAN</label>

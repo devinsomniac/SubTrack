@@ -42,7 +42,7 @@ const page = () => {
           </div>
           <div>
             <label>Customer Id</label>
-            <Input className='mb-2' readOnly value={GenerateIds}/>
+            <Input className='mb-2' readOnly value={}/>
             <Button onClick={GenerateIds}>Generate</Button>
           </div>
           <div>

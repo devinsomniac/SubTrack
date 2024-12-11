@@ -1,13 +1,17 @@
+"use client"
 import SelectCustomer from '@/components/SelectCustomer'
 import SelectProduct from '@/components/SelectProduct'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { GenerateIds } from '@/lib/GenerateId'
-import React from 'react'
+import React, { useState } from 'react'
 
 const page = () => {
-
+  const [generatedId,setGeneratedId] = useState("")
+  const handleGenerate = () => {
+    setGeneratedId(GenerateIds())
+  }
   return (
     <>
       <section className='p-10'>
@@ -42,8 +46,8 @@ const page = () => {
           </div>
           <div>
             <label>Customer Id</label>
-            <Input className='mb-2' readOnly value={}/>
-            <Button onClick={GenerateIds}>Generate</Button>
+            <Input className='mb-2' readOnly value={generatedId}/>
+            <Button onClick={handleGenerate}>Generate</Button>
           </div>
           <div>
             <label>PAN</label>

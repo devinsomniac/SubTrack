@@ -10,7 +10,7 @@ const page = async() => {
   return (
     <>
       <section className='p-10'>
-        <h2 className='text-2xl font-semibold text-center'>Add New Subscription</h2>
+        <h2 className='text-2xl font-semibold text-center'>Add New Subscription</h2>  KX
         <form className='flex gap-3 justify-center items-center p-3'>
           <div className='flex flex-col items-center'>
             <label>Customer</label>

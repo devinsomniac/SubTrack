@@ -3,10 +3,16 @@ import SelectProduct from '@/components/SelectProduct'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import { GenerateIds } from '@/lib/GenerateId'
 import React from 'react'
 
 const page = async() => {
+   let Id : string = ''
+  const GenerateId = () => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    for(let i = 0 ; i < 10 ; i++){
+        Id += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+  }
   return (
     <>
       <section className='p-10'>
@@ -41,8 +47,8 @@ const page = async() => {
           </div>
           <div>
             <label>Customer Id</label>
-            <Input className='mb-2' readOnly />
-            <Button >Generate</Button>
+            <Input className='mb-2' readOnly value={Id} />
+            <Button onClick={GenerateId}>Generate</Button>
           </div>
           <div>
             <label>PAN</label>

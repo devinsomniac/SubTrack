@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import React, { useState } from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,33 +11,18 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import { useCustomerContext } from "@/Context/CustomerContext";
 
-import { customerType } from "@/Database/schema"
 export default function SelectCustomer() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
-  const [customers, setCustomers] = React.useState<customerType[]>([]) 
-
-
-  React.useEffect(() => {
-    const fetchCustomerFromDb = async () => {
-      try {
-        const response = await fetch("/api/fetchCustomer")
-        const data = await response.json()
-        setCustomers(data)
-        console.log(data) 
-      } catch (err) {
-        console.error("There has been an error in Select Customer", err)
-      }
-    }
-    fetchCustomerFromDb()
-  }, [])
+  const {customers} = useCustomerContext()
+  const [value, setValue] = useState("");
+  const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -50,7 +34,7 @@ export default function SelectCustomer() {
           className="w-[200px] justify-between"
         >
           {value
-            ? customers.find((customer) => customer.name === value)?.name
+            ? customers.find((customer) => customer.customerId === value)?.name
             : "Select customer..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -63,17 +47,17 @@ export default function SelectCustomer() {
             <CommandGroup>
               {customers.map((customer) => (
                 <CommandItem
-                  key={customer.customerId} 
-                  value={customer.name}
+                  key={customer.customerId}
+                  value={customer.customerId}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                    setValue(currentValue === value ? "" : currentValue);
+                    setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === customer.name ? "opacity-100" : "opacity-0"
+                      value === customer.customerId ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {customer.name}
@@ -84,5 +68,5 @@ export default function SelectCustomer() {
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

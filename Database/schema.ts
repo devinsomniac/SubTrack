@@ -42,3 +42,10 @@ export type customerType = {
     name : string,
     pan : string | null
 }
+
+
+export type productType = {
+  productName : string,
+  description : string,
+  annualCostPerUser : number
+}

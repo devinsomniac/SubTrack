@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import {
     Select,
     SelectContent,
@@ -6,10 +7,25 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-  import { product } from '@/Database/schema'
+  import { product, productType } from '@/Database/schema'
   import { db } from '@/Database'
-const SelectProduct = async() => {
-    const productArray = await db.select().from(product)
+const SelectProduct = () => {
+  const [products,setProducts] = useState<productType[]>([])
+  useEffect(() => {
+    const fetchProduct = async() => {
+      try {
+        const response = await fetch('/api/fetchProduct');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data); 
+      }catch(err){
+        console.log("Error",err)
+      }
+    }
+    fetchProduct()
+  },[])
   return (
     <div>
       <Select>
@@ -17,7 +33,7 @@ const SelectProduct = async() => {
     <SelectValue placeholder="Product" />
   </SelectTrigger>
   <SelectContent>
-    {productArray.map((product,index) => (
+    {products.map((product,index) => (
         <SelectItem key={index} value={product.productName}>{product.productName}</SelectItem>
     ))}
   </SelectContent>

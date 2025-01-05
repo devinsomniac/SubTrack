@@ -3,7 +3,7 @@ import AddSubs from '@/components/AddSubs'
 import { Separator } from '@/components/ui/separator'
 import { CustomerProvider } from '@/Context/CustomerContext'
 import React from 'react'
-
+import { Toaster } from '@/components/ui/sonner'
 const page = () => {
   return (
     <>
@@ -18,7 +18,7 @@ const page = () => {
         <h2 className='text-2xl font-semibold text-center'>Add New Customer</h2>
         <AddCustomerForm/>
       </section>
-
+      <Toaster/>
 
     </>
   )

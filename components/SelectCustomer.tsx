@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { useCustomerContext } from "@/Context/CustomerContext";
 
-export default function SelectCustomer() {
+export default function SelectCustomer({onSelectCustomer} : {onSelectCustomer : (customerId : string) => void}) {
   const {customers} = useCustomerContext()
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
@@ -52,6 +52,7 @@ export default function SelectCustomer() {
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
+                    onSelectCustomer(currentValue)
                   }}
                 >
                   <Check

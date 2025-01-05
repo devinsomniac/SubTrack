@@ -7,9 +7,9 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-  import { product, productType } from '@/Database/schema'
+  import { productType } from '@/Database/schema'
   import { db } from '@/Database'
-const SelectProduct = () => {
+const SelectProduct = ({onSelectProduct} : {onSelectProduct : (productName:string ) => void}) => {
   const [products,setProducts] = useState<productType[]>([])
   useEffect(() => {
     const fetchProduct = async() => {
@@ -28,7 +28,7 @@ const SelectProduct = () => {
   },[])
   return (
     <div>
-      <Select>
+      <Select onValueChange={(value) => onSelectProduct(value)}>
   <SelectTrigger className="w-[180px]">
     <SelectValue placeholder="Product" />
   </SelectTrigger>

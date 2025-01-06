@@ -3,11 +3,15 @@ import { Input } from '@/components/ui/input'
 import React, { ChangeEvent, useState } from 'react'
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { Toaster } from '@/components/ui/sonner'
+import { LuLoaderPinwheel } from "react-icons/lu";
 
 const page = () => {
   const [productName,setProductName] = useState<string>("")
   const [productDescription,setProductDescriprtion] = useState<string>("")
   const [productPrice,setProductPrice] = useState<number | undefined>()
+  const [loading,setLoading] = useState(false)
 
   const handleProductName = (e:ChangeEvent<HTMLInputElement>) => {
     setProductName(e.target.value)
@@ -23,6 +27,8 @@ const page = () => {
   }
   const handleProductSubmit = async(event : ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
+    const form = event.currentTarget
     const formData = new FormData(event.currentTarget)
     formData.append('productName',productName)
     formData.append('productprice',productPrice ?.toString() ?? '')
@@ -37,13 +43,20 @@ const page = () => {
         },
         body : JSON.stringify(data)
       })
-      if(!response){
+      if(response){
+        toast.success("New Product Has been added")
+        if(form){
+          form.reset()
+        }
+      }else{
         throw new Error("Error in adding nw product")
       }
       const result = await response.json()
       console.log('Submission successful:', result)
     }catch(err){
       console.log("Error in adding product",err)
+    }finally{
+      setLoading(false)
     }
   }
   return (
@@ -65,9 +78,9 @@ const page = () => {
             <Textarea onChange={handleProductDescription}
             placeholder='Google Workspace (formerly G Suite) is a cloud-based productivity and collaboration suite that includes tools like Gmail, Google Drive, Docs, Sheets, and Meet for businesses and individuals.'/>
         </div>
-        <div className='flex justify-end'><Button className='mt-4'>Add Product</Button></div>
-        
+        <div className='flex justify-end'><Button disabled={loading} className='mt-4'>{loading ?<LuLoaderPinwheel className='animate-spin' /> : "Add Product"}</Button></div>
       </form>
+      <Toaster/>
     </div>
   )
 }

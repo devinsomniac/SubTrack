@@ -4,11 +4,16 @@ import SelectCustomer from './SelectCustomer'
 import SelectProduct from './SelectProduct'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
+import { LuLoaderPinwheel } from "react-icons/lu";
+import { toast } from "sonner";
+
+
 const AddSubs = () => {
   const [selectedCustomer,setSelectedCustomer] = useState<string>("")
   const [selectedProduct,setSlectedProduct] = useState<string>("")
   const [startDate,setStartDate] = useState<string>("")
   const [endDate,setEndDate] = useState<string>("")
+  const [loading,setLoading] = useState<boolean>(false)
 
   const handleCustomerSelection = (value : string) => {
     setSelectedCustomer(value)
@@ -30,6 +35,7 @@ const AddSubs = () => {
 
   const handleFormSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setLoading(true)
     const formData = new FormData(e.currentTarget)//{"key":"value","key":"value"}
     formData.append('customer',selectedCustomer)
     formData.append('product',selectedProduct)
@@ -50,8 +56,12 @@ const AddSubs = () => {
       }
       const result = await response.json()
       console.log('Submission successful:', result)
+      toast.success("Subscription added successfully!");
     }catch(err){
       console.log("There has been an error in subscription",err)
+      toast.error("Error in Adding Subsxription")
+    }finally {
+      setLoading(false);
     }
   }
   return (
@@ -73,7 +83,7 @@ const AddSubs = () => {
             <label>End Date</label>
             <Input type='date' className='w-[150px]' onChange={handleEndDate}/>
           </div>
-          <Button className='mt-6'>Start</Button>
+          <Button className='mt-6' disabled={loading}>{loading ? <LuLoaderPinwheel className='animate-spin' /> : "Start"}</Button>
         </form>
     </div>
   )

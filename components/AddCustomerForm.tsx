@@ -1,29 +1,42 @@
 'use client';
 
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import GenerateId from '@/components/GenerateId';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { LuLoaderPinwheel } from "react-icons/lu";
 
 const AddCustomerForm = () => {
+  const [loading, setLoading] = useState(false)
   const createNewCustomer = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const response = await fetch('/api/createNewCustomer', {
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData)),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    setLoading(true);
 
-    if (response.ok) {
-      toast("New Customer has been added to database")
-    } else {
-      alert('Failed to add customer.');
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch('/api/createNewCustomer', {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        toast.success("New Customer has been added to database!");
+      } else {
+        throw new Error("Failed to add customer.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Error adding customer.");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   return (
     <form className="flex flex-col gap-3" onSubmit={createNewCustomer}>
@@ -36,7 +49,10 @@ const AddCustomerForm = () => {
         <label>PAN</label>
         <Input name="pan" required />
       </div>
-      <Button type="submit">Add Customer</Button>
+      <div>
+      <Button type="submit" disabled={loading}>{loading ?<LuLoaderPinwheel className='animate-spin'/> : "Add Customer" }</Button>
+      </div>
+      
     </form>
   );
 };

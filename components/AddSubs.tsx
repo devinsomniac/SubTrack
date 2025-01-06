@@ -30,20 +30,20 @@ const AddSubs = () => {
 
   const handleFormSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget)//{"key":"value","key":"value"}
     formData.append('customer',selectedCustomer)
     formData.append('product',selectedProduct)
     formData.append('startDate',startDate)
     formData.append('endDate',endDate)
 
-    const data = Object.fromEntries(formData.entries())
+    const data = Object.fromEntries(formData.entries())//[["Key","Value"],["key":"value"]] -> {key:"value",key:"value"}
     try{
-      const response = await fetch("/api/AddNewSubs",{
-        method:'POST',
-        headers:{
-          'Content-Type' : 'application/json'
+      const response = await fetch("/api/AddNewSubs", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify(data)
+        body: JSON.stringify(data)
       })
       if(!response.ok){
         throw new Error('Failed to submit subscription data')

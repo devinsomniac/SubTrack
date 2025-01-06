@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { LuLoaderPinwheel } from "react-icons/lu";
-
+import { useCustomerContext } from '@/Context/CustomerContext';
 const AddCustomerForm = () => {
   const [loading, setLoading] = useState(false)
+  const {setCustomers} = useCustomerContext()
   const createNewCustomer = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
+    const form = e.currentTarget;
     const formData = new FormData(e.currentTarget);
 
     try {
@@ -26,6 +27,12 @@ const AddCustomerForm = () => {
 
       if (response.ok) {
         toast.success("New Customer has been added to database!");
+        const updatedResponse = await fetch('/api/fetchCustomer')
+        const updatedCustomer = await updatedResponse.json()
+        setCustomers(updatedCustomer)
+        if (form) {
+          form.reset();
+        }
       } else {
         throw new Error("Failed to add customer.");
       }

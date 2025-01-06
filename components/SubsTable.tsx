@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { LuLoaderPinwheel } from "react-icons/lu";
 
 const SubsTable = ({search} : {search : string}) => {
     const [subs,setSubs] =  useState<SubscriptionWithCustomer[]>([]);
@@ -64,8 +65,8 @@ const SubsTable = ({search} : {search : string}) => {
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center">
-                                No subscriptions found.
+                            <TableCell colSpan={6} className="text-center flex items-center justify-center">
+                                <LuLoaderPinwheel className='animate-spin'/>
                             </TableCell>
                         </TableRow>
                     )}

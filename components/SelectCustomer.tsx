@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { useCustomerContext } from "@/Context/CustomerContext";
 
-export default function SelectCustomer({onSelectCustomer} : {onSelectCustomer : (customerId : string) => void}) {
+export default function SelectCustomer({onSelectCustomer,selectedCustomer} : {selectedCustomer:string,onSelectCustomer : (customerId : string) => void}) {
   const {customers} = useCustomerContext()
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
@@ -33,8 +33,8 @@ export default function SelectCustomer({onSelectCustomer} : {onSelectCustomer : 
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? customers.find((customer) => customer.customerId === value)?.name
+          {selectedCustomer
+            ? customers.find((customer) => customer.customerId === selectedCustomer)?.name
             : "Select customer..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

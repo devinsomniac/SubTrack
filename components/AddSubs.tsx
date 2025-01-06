@@ -6,21 +6,21 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { LuLoaderPinwheel } from "react-icons/lu";
 import { toast } from "sonner";
-
+import { useCustomerContext } from '@/Context/CustomerContext'
 
 const AddSubs = () => {
   const [selectedCustomer,setSelectedCustomer] = useState<string>("")
-  const [selectedProduct,setSlectedProduct] = useState<string>("")
+  const [selectedProduct,setSelectedProduct] = useState<string>("")
   const [startDate,setStartDate] = useState<string>("")
   const [endDate,setEndDate] = useState<string>("")
   const [loading,setLoading] = useState<boolean>(false)
-
+  const {setCustomers} = useCustomerContext()
   const handleCustomerSelection = (value : string) => {
     setSelectedCustomer(value)
     console.log(value)
   }
   const handleProductSelection = (value : string) =>{
-    setSlectedProduct(value)
+    setSelectedProduct(value)
     console.log(value)
   }
   const handleStartDate = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +36,7 @@ const AddSubs = () => {
   const handleFormSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
+    const form = e.currentTarget
     const formData = new FormData(e.currentTarget)//{"key":"value","key":"value"}
     formData.append('customer',selectedCustomer)
     formData.append('product',selectedProduct)
@@ -51,12 +52,18 @@ const AddSubs = () => {
         },
         body: JSON.stringify(data)
       })
-      if(!response.ok){
+      if(response.ok){
+        toast.success("Subscription added successfully!");
+        if(form){
+          form.reset()
+        }
+        setSelectedCustomer(""); // Reset customer selection
+        setSelectedProduct(""); // Reset product selection
+        setStartDate(""); // Reset start date
+        setEndDate(""); // Reset end date
+      }else{
         throw new Error('Failed to submit subscription data')
       }
-      const result = await response.json()
-      console.log('Submission successful:', result)
-      toast.success("Subscription added successfully!");
     }catch(err){
       console.log("There has been an error in subscription",err)
       toast.error("Error in Adding Subsxription")
@@ -69,11 +76,11 @@ const AddSubs = () => {
       <form className='flex gap-3 justify-center items-center p-3' onSubmit={handleFormSubmit}>
           <div className='flex flex-col items-center'>
             <label>Customer</label>
-            <SelectCustomer onSelectCustomer = {handleCustomerSelection} />
+            <SelectCustomer onSelectCustomer = {handleCustomerSelection} selectedCustomer={selectedCustomer}/>
           </div>
           <div className='flex flex-col items-center'>
             <label>Product</label>
-            <SelectProduct onSelectProduct={handleProductSelection}/>
+            <SelectProduct onSelectProduct={handleProductSelection} selectedProduct={selectedProduct}/>
           </div>
           <div className='flex flex-col items-center'>
             <label>Start Date</label>

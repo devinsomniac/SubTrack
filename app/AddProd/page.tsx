@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { Toaster } from '@/components/ui/sonner'
 import { LuLoaderPinwheel } from "react-icons/lu";
+import Signature from '@/components/Signature'
 
 const page = () => {
   const [productName,setProductName] = useState<string>("")
@@ -81,6 +82,7 @@ const page = () => {
         <div className='flex justify-end'><Button disabled={loading} className='mt-4'>{loading ?<LuLoaderPinwheel className='animate-spin' /> : "Add Product"}</Button></div>
       </form>
       <Toaster/>
+      <Signature/>
     </div>
   )
 }

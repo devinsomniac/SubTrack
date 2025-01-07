@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator'
 import { CustomerProvider } from '@/Context/CustomerContext'
 import React from 'react'
 import { Toaster } from '@/components/ui/sonner'
+import Signature from '@/components/Signature'
 const page = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const page = () => {
       </section>
       <Toaster/>
       </CustomerProvider>
+      <Signature/>
     </>
   )
 }

@@ -55,7 +55,7 @@ const SubsTable = ({search} : {search : string}) => {
                 <TableBody>
                     {subs.length > 0 ? (
                         subs.map((sub) => (
-                            <TableRow key={sub.subscription.subscriptionId}>
+                            <TableRow key={sub.subscription.subscriptionId} className='hover:bg-slate-100'>
                                 <TableCell className="font-medium">{sub.subscription.subscriptionId}</TableCell>
                                 <TableCell className='hover:underline'> <Link href={`/Users/${sub.customer.customerId}`}>{sub.customer.name}</Link></TableCell>
                                 <TableCell>{sub.subscription.productName}</TableCell>

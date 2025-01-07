@@ -11,6 +11,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { LuLoaderPinwheel } from "react-icons/lu";
+import Link from 'next/link';
 
 const SubsTable = ({search} : {search : string}) => {
     const [subs,setSubs] =  useState<SubscriptionWithCustomer[]>([]);
@@ -56,7 +57,7 @@ const SubsTable = ({search} : {search : string}) => {
                         subs.map((sub) => (
                             <TableRow key={sub.subscription.subscriptionId}>
                                 <TableCell className="font-medium">{sub.subscription.subscriptionId}</TableCell>
-                                <TableCell>{sub.customer.name}</TableCell>
+                                <TableCell className='hover:underline'> <Link href={`/Users/${sub.customer.customerId}`}>{sub.customer.name}</Link></TableCell>
                                 <TableCell>{sub.subscription.productName}</TableCell>
                                 <TableCell>{sub.subscription.subscriptionStartDate}</TableCell>
                                 <TableCell>{sub.subscription.subscriptionEndDate}</TableCell>
@@ -65,7 +66,7 @@ const SubsTable = ({search} : {search : string}) => {
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center flex items-center justify-center">
+                            <TableCell className="text-center flex items-center justify-center">
                                 <LuLoaderPinwheel className='animate-spin'/>
                             </TableCell>
                         </TableRow>

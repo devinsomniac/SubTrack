@@ -1,4 +1,4 @@
-import { integer, pgTable, varchar, real, date, PgVarchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, real, date } from "drizzle-orm/pg-core";
 
 
 export const customer = pgTable("customer", {
@@ -22,6 +22,14 @@ export const subscription = pgTable("subscription", {
   subscriptionStartDate: date().notNull(), 
   subscriptionEndDate: date().notNull(), 
   numberOfUsers: integer().notNull(), 
+});
+
+export const archievesubscription = pgTable("archievesubscription", {
+  subscriptionId: integer().primaryKey(), 
+  customerId: varchar({ length: 50 }).notNull().references(() => customer.customerId), 
+  productName: varchar({ length: 100 }).notNull().references(() => product.productName), 
+  subscriptionStartDate: date().notNull(), 
+  subscriptionEndDate: date().notNull(), 
 });
 
 export type SubscriptionWithCustomer = {

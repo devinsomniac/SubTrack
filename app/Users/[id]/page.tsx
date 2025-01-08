@@ -1,4 +1,5 @@
 import CustomerSubscriptions from '@/components/CustomerSubscriptions'
+import Signature from '@/components/Signature'
 import { db } from '@/Database'
 import { customer, subscription } from '@/Database/schema'
 import { eq } from 'drizzle-orm'
@@ -24,6 +25,7 @@ const page = async({params} : {params : { id: string}}) => {
         <p>Customer Pan : {customerDetails.pan}</p> 
       </div>
       <CustomerSubscriptions customerSubscription={customerSubscription}/>
+      <Signature/>
     </div>
   )
 }

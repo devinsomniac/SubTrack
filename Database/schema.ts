@@ -29,7 +29,8 @@ export const archievesubscription = pgTable("archievesubscription", {
   customerId: varchar({ length: 50 }).notNull().references(() => customer.customerId), 
   productName: varchar({ length: 100 }).notNull().references(() => product.productName), 
   subscriptionStartDate: date().notNull(), 
-  subscriptionEndDate: date().notNull(), 
+  subscriptionEndDate: date().notNull(),
+  numberOfUsers: integer().notNull() 
 });
 
 export type SubscriptionWithCustomer = {

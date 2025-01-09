@@ -19,7 +19,7 @@ const data = {
       title: "Subscription Management",
       items: [
         {
-          title: "Subscriptions",
+          title: "Active Subscriptions",
           url: '/',
         },
         {
@@ -29,6 +29,10 @@ const data = {
         {
           title: "Add Product",
           url: "/AddProd",
+        },
+        {
+          title: "Archieve subscriptions",
+          url: '/ArchieveSubs', 
         },
       ],
     },

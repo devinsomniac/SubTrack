@@ -6,6 +6,7 @@ import { MdAutoDelete } from "react-icons/md";
 import { db } from '@/Database';
 import { subscription } from '@/Database/schema';
 import { eq } from 'drizzle-orm';
+import { LuLoaderPinwheel } from "react-icons/lu";
 
 type customer = {
   customerId: string;
@@ -33,7 +34,9 @@ type Props = {
 
 const CustomerSubscriptions: React.FC<Props> = ({ customerSubscription }) => {
   const [subscriptions, setSubscriptions] = useState(customerSubscription);
+  const [loading,setLoading] = useState(false)
   const deleteSubscription = async (subscripId: number) => {
+    setLoading(true)
     try {
       const deleteResponse = await db.delete(subscription).where(eq(subscription.subscriptionId, subscripId));
       console.log(deleteResponse);
@@ -42,6 +45,8 @@ const CustomerSubscriptions: React.FC<Props> = ({ customerSubscription }) => {
       );
     } catch (error) {
       console.error("Error deleting subscription:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -58,10 +63,11 @@ const CustomerSubscriptions: React.FC<Props> = ({ customerSubscription }) => {
             <p>Subscription End: {sub.subscription.subscriptionEndDate}</p>
             <p>Number of Users: {sub.subscription.numberOfUsers}</p>
             <Button
-              disabled={isExpired}
+              disabled={loading}
               onClick={() => deleteSubscription(sub.subscription.subscriptionId)}
               className={`mt-3 ${isExpired ? 'cursor-not-allowed opacity-50' : ''}`}>
-              End Subscription <MdAutoDelete />
+                {loading ? <LuLoaderPinwheel/> : "End Subscription" }
+               <MdAutoDelete />
             </Button>
           </div>
         );

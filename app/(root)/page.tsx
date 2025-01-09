@@ -11,7 +11,7 @@ const Page = () => {
         <>
             <div className="p-5">
                 <h2 className="font-semibold text-2xl">Subscriptions</h2>
-                <form action="" className="w-[500px] border p-4 rounded-xl my-2 flex flex-col gap-2">
+                <form className="w-[500px] border p-4 rounded-xl my-2 flex flex-col gap-2">
                     <label>Search</label>
                     <Input value={search} onChange={handleChange} />
                 </form>
@@ -22,6 +22,7 @@ const Page = () => {
             </div>
 
         </>
+
 
 
     )

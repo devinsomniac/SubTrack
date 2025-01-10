@@ -41,7 +41,7 @@ const data = {
       items: [
         {
           title: "Revenue Earned",
-          url: "#",
+          url: "/reports",
         },
       ],
     },

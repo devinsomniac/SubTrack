@@ -5,13 +5,9 @@ import { customer, subscription } from '@/Database/schema';
 import { eq } from 'drizzle-orm';
 import React from 'react';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+type Params = Promise<{ id: string }>
 
-const Page: React.FunctionComponent<PageProps> = async ({ params }) => {
+const Page = async ({ params }:{params : Params}) => {
   const { id } = await params; // Ensure `params` resolves properly.
   const customerId = id;
 

@@ -70,8 +70,8 @@ const AddSubs = () => {
     }
   }
   return (
-    <div>
-      <form className='flex gap-3 justify-center items-center p-3' onSubmit={handleFormSubmit}>
+    <div >
+      <form className='flex flex-col md:flex-row w-full  gap-3 justify-center items-center p-3' onSubmit={handleFormSubmit}>
           <div className='flex flex-col items-center'>
             <label>Customer</label>
             <SelectCustomer onSelectCustomer = {handleCustomerSelection} selectedCustomer={selectedCustomer}/>

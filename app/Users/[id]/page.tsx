@@ -5,7 +5,8 @@ import { customer, subscription } from '@/Database/schema'
 import { eq } from 'drizzle-orm'
 import React from 'react'
 const page = async({params} : {params : { id: string}}) => {
-  const customerId = (await params).id
+  const { id } = params
+  const customerId = id
   console.log(customerId)
   if(!customerId){
     throw new Error("No customer found")

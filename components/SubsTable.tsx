@@ -15,7 +15,6 @@ import Link from 'next/link';
 
 const SubsTable = ({search} : {search : string}) => {
     const [subs,setSubs] =  useState<SubscriptionWithCustomer[]>([]);
-    const [loading,setLoading] = useState(true)
     useEffect(() => {
 
         const fetchData = async() => {
@@ -31,9 +30,6 @@ const SubsTable = ({search} : {search : string}) => {
                 }
             }catch(err){
                 console.log("There has been error in SusTable Code",err)
-            }
-            finally {
-                setLoading(false);
             }
         }
         fetchData()

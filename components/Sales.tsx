@@ -1,6 +1,6 @@
 import { db } from '@/Database';
 import { subscription, product } from '@/Database/schema';
-import { eq, sql, and, gt } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import React from 'react';
 import { FaDollarSign } from "react-icons/fa6";
 

@@ -1,8 +1,8 @@
 import { db } from "@/Database";
 import { sql } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         const data = await db.execute(sql`
       WITH last_12_months AS (

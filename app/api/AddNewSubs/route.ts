@@ -1,8 +1,6 @@
 import { db } from "@/Database";
 import { subscription } from "@/Database/schema";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
-import React from "react";
 
 export async function POST (req:NextRequest){
     try{

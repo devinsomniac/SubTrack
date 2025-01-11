@@ -14,7 +14,6 @@ const AddSubs = () => {
   const [startDate,setStartDate] = useState<string>("")
   const [endDate,setEndDate] = useState<string>("")
   const [loading,setLoading] = useState<boolean>(false)
-  const {setCustomers} = useCustomerContext()
   const handleCustomerSelection = (value : string) => {
     setSelectedCustomer(value)
     console.log(value)

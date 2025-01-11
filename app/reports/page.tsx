@@ -1,6 +1,6 @@
 import ActiveSubs from '@/components/ActiveSubs';
 import ArchieveSubs from '@/components/ArchieveSubs';
-import { chartSales } from '@/components/Charts';
+import { ChartSales } from '@/components/ChartSales';
 import LatestSubs from '@/components/LatestSubs';
 import Sales from '@/components/Sales';
 import Signature from '@/components/Signature';
@@ -11,7 +11,7 @@ const formatDate = (date: Date): string => {
   const day = date.getDate();
 
   const ordinalSuffix = (n: number): string => {
-    if (n > 3 && n < 21) return 'th'; 
+    if (n > 3 && n < 21) return 'th';
     switch (n % 10) {
       case 1: return 'st';
       case 2: return 'nd';
@@ -40,18 +40,21 @@ const Page: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
         <ActiveSubs />
         <ArchieveSubs />
-        <TotalSubs/>
-        <Sales/>
+        <TotalSubs />
+        <Sales />
       </div>
       <div className='p-3 grid grid-cols-1  md:grid-cols-3 gap-2'>
-        <div className='border border-black rounded-lg col-span-2'>
-        <chartSales/>
+        <div className=' border border-black rounded-lg col-span-2'>
+          <div className='p-3'>
+            <h2 className='font-semibold text-lg'>Insight of last 12 months</h2>
+          </div>
+          <ChartSales />
         </div>
         <div className='col-span-1 border border-gray-700 rounded-lg'>
-          <LatestSubs/>
+          <LatestSubs />
         </div>
       </div>
-      <Signature/>
+      <Signature />
     </div>
   );
 };

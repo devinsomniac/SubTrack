@@ -3,6 +3,7 @@ import { customer, subscription } from '@/Database/schema';
 import { desc, eq, sql } from 'drizzle-orm';
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Link from 'next/link';
 
 const LatestSubs = async () => {
     const result = await db
@@ -24,11 +25,12 @@ const LatestSubs = async () => {
                             <AvatarImage src="https://github.com/shadcn.png" />
                             <AvatarFallback>P</AvatarFallback>
                         </Avatar>
-
+                       <Link href={`/Users/${sub.customer.customerId}`}>
                         <div>
-                            <p className='font-semibold'>{sub.customer.name}</p>
+                            <p className='font-semibold hover:underline'>{sub.customer.name}</p>
                             <p>{sub.customer.customerId}</p>
                         </div>
+                        </Link>
                         </div>
                         <div className='text-right font-semibold'>
                             <p>{sub.subscription.productName}</p>

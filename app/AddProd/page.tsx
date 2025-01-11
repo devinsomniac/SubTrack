@@ -8,7 +8,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { LuLoaderPinwheel } from "react-icons/lu";
 import Signature from '@/components/Signature'
 
-const page = () => {
+const Page = () => {
   const [productName,setProductName] = useState<string>("")
   const [productDescription,setProductDescriprtion] = useState<string>("")
   const [productPrice,setProductPrice] = useState<number | undefined>()
@@ -87,4 +87,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -78,11 +78,11 @@ const AddSubs = () => {
           </div>
           <div className='flex flex-col items-center'>
             <label>Product</label>
-            <SelectProduct onSelectProduct={handleProductSelection} selectedProduct={selectedProduct}/>
+            <SelectProduct onSelectProduct={handleProductSelection} selectedProduct={selectedProduct} />
           </div>
           <div className='flex flex-col items-center'>
             <label>Start Date</label>
-            <Input type='date' className='w-[150px]' onChange={handleStartDate} />
+            <Input type='date' min={new Date().toISOString().split('T')[0]} className='w-[150px]' onChange={handleStartDate} />
           </div>
           <div className='flex flex-col items-center' >
             <label>End Date</label>
